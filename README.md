@@ -246,6 +246,7 @@ EOF
 ```
 
 - chmod +x monitoring.sh
+
 #Crontab
 - Para fazer com que um programa seja executado a cada 10 minutos, precisamos usar o crontab. No entanto, o crontab opera apenas em intervalos fixos de tempo, como a cada 10 minutos, mas ele inicia nos horários redondos. Por exemplo, se você ligou o computador às 13:55 e deseja que o script seja executado 10 minutos depois, ou seja, às 14:05, o crontab não pode fazer isso diretamente.
 
