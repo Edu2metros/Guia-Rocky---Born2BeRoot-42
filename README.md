@@ -321,13 +321,13 @@ sudo chage -W 7 (seu_usuario)
 sudo chage -M 30 root
 sudo chage -m 2 root
 sudo chage -W 7 root
-```
+
 ## Comandos avaliação:
 
 Você consegue acessar a régua de avaliação por [aqui](https://github.com/gemartin99/Born2beroot-Tutorial#9--hoja-de-correcci%C3%B3n-).
-```
-## Comandos durante a avaliação
 
+## Comandos durante a avaliação
+```
 - Checar se o serviço firewalld está funcionando:
 sudo systemctl status firewalld
 
@@ -397,3 +397,4 @@ cd /usr/local/bin
 sudo vi monitoring.sh
 sudo vi sleep.sh
 sudo crontab -e
+```
