@@ -397,4 +397,3 @@ cd /usr/local/bin
 sudo vi monitoring.sh
 sudo vi sleep.sh
 sudo crontab -e
-```
