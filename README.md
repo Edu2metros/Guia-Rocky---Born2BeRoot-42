@@ -140,7 +140,7 @@ usermod -aG wheel (seu_usuario)
 - Escreva o comando: 
 ssh-keygen -t rsa
 - Pressione enter três vezes seguidas.
-Na sua VirtualBox, clique em settings -> Network -> Attached to: Bridged Adapter.
+- Na sua VirtualBox, clique em settings -> Network -> Attached to: Bridged Adapter.
 ![](https://github.com/Eduu19/Guia-Born2BeRoot-Rocky/blob/master/Imagens/Screenshot%202023-10-17%20at%2017-49-17%20Guia%20Rocky%20-%20Born2BeRoot%2042%20-%20Guia%20Rocky%20-%20Born2BeRoot%2042.pdf.png?raw=true)
 - Dê reboot e entre no root.
 
@@ -186,10 +186,11 @@ Defaults	logfile=/var/log/sudo/sudo.log
 ``````
 Pesquise o cada comando faz!
 - Crie um arquivo chamado "sudo.log" na pasta /var/log/sudo:
+```
 - cd /var/log/
 - mkdir sudo | cd sudo
 - touch sudo.log
-
+```
 ## Hostname e Grupo
 
 - O subject pede para que o seu hostname seja o seu login seguido de um 42, para fazer isso, escreva:
@@ -247,7 +248,7 @@ EOF
 
 - chmod +x monitoring.sh
 
-#Crontab
+## Crontab
 - Para fazer com que um programa seja executado a cada 10 minutos, precisamos usar o crontab. No entanto, o crontab opera apenas em intervalos fixos de tempo, como a cada 10 minutos, mas ele inicia nos horários redondos. Por exemplo, se você ligou o computador às 13:55 e deseja que o script seja executado 10 minutos depois, ou seja, às 14:05, o crontab não pode fazer isso diretamente.
 
 - Para agendar o comando para ser executado nos momentos exatos que desejamos, precisamos criar um arquivo adicional. No mesmo diretório em que você criou o monitoring.sh, criaremos um arquivo chamado sleep.sh. Este arquivo calculará o tempo em segundos necessário para esperar até que o comando seja executado exatamente 10 minutos após o início.
@@ -274,23 +275,31 @@ Eu altamente recomendo que você estude saiba o que está fazendo. Não se esque
 
 Prontinho. Agora rodará a cada 10 minutos! :) Não se esqueça de medir se realmente está funcionando e comparar o resultado com o pdf.
 
-Eu recomendo fortemente a você pesquisar o que o script está fazendo e para que serve cada comando.
-
-
 ## Política de Senha
+O subject pede algumas configurações para política de senha. Que são: 
+- A senha deve expirar a cada 30 dias
+- O mínimo numero de dias que você pode trocar a senha são dois dias.
+- O usuário deverar receber uma mensagem de alerta apartir de 7 dias antes da senha expirar.
+- Mínimo de 10 caracteres
+- Deve conter uma letra maíscula e outra minúscula.
+- Um número
+- Não pode conter mais de 3 caracteres idênticos.
+- Não pode incluir nome de usuário
+
+Faremos:
 ```
-cd /etc/pam.d/
-sudo vi system-auth
-Procure a linha:
+-> cd /etc/pam.d/
+$ sudo vi system-auth
+-> Procure a linha:
 password    requisite     pam_pwquality.so
-Comente ela.
-Cole essa linha:
+-> Comente ela.
+-> Cole essa linha:
 password    requisite                                    pam_pwquality.so try_first_pass local_users_only retry=3 authtok_type= minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 difok=3 reject_username enforce_for_root
-e embaixo dela, coloque:
+-> e embaixo dela, coloque:
 password    sufficient                                   pam_unix.so remember=7
 Salve o arquivo e saia.
-sudo vi password-auth
-Faça a mesma coisa.
+Faça o mesmo procedimento nesse arquivo:
+sudo vi password-auth.
 ```
 Teste criando um usuário teste e atribua uma senha a ele que não entra na política de uso:
 
@@ -302,15 +311,15 @@ sudo userdel teste
 
 
 Altere também o arquivo:
-
+```
 sudo vi /etc/login.defs
 procure as linhas:
 PASS_MAX_DAYS   99999
 PASS_MIN_DAYS   0
 PASS_WARN_AGE   7
-
+```
 Altere-as colocando:
-
+```
 PASS_MAX_DAYS   30
 PASS_MIN_DAYS   2
 PASS_WARN_AGE   7
@@ -322,7 +331,7 @@ sudo chage -W 7 (seu_usuario)
 sudo chage -M 30 root
 sudo chage -m 2 root
 sudo chage -W 7 root
-
+```
 ## Comandos avaliação:
 
 Você consegue acessar a régua de avaliação por [aqui](https://github.com/gemartin99/Born2beroot-Tutorial#9--hoja-de-correcci%C3%B3n-).
